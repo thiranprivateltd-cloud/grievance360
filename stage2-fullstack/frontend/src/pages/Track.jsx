@@ -157,7 +157,7 @@ function Track() {
                     <div className="col-sm-6"><strong>Grievance Type:</strong> {complaint.subcategory}</div>
                     <div className="col-sm-6"><strong>Bus Route/Name:</strong> {complaint.busRoute}</div>
                     <div className="col-sm-6"><strong>Bus Type:</strong> {complaint.busType}</div>
-                    <div className="col-sm-6"><strong>Bus Plate No:</strong> {complaint.busNumber}</div>
+                    <div className="col-sm-6"><strong>Bus Number:</strong> {complaint.busNumber}</div>
                   </div>
                 </div>
               )}
