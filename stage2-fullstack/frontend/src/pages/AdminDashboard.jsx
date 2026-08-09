@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
 function AdminDashboard() {
   const navigate = useNavigate();
   const [complaints, setComplaints] = useState([]);
@@ -12,14 +11,12 @@ function AdminDashboard() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterCategory, setFilterCategory] = useState('All');
   const [filterStatus, setFilterStatus] = useState('All');
-
   // Modal / Action States
   const [selectedComplaint, setSelectedComplaint] = useState(null);
   const [actionStatus, setActionStatus] = useState('Pending');
   const [actionPriority, setActionPriority] = useState('Medium');
   const [actionRemarks, setActionRemarks] = useState('');
   const [updating, setUpdating] = useState(false);
-
   // Check auth token
   const getHeaders = () => {
     const token = localStorage.getItem('g360_admin_token');
@@ -33,14 +30,11 @@ function AdminDashboard() {
       }
     };
   };
-
   const fetchComplaints = async () => {
     const headers = getHeaders();
     if (!headers) return;
-
     setLoading(true);
     setErrorMsg('');
-
     try {
       const res = await axios.get('/api/complaints', headers);
       setComplaints(res.data);
@@ -56,49 +50,40 @@ function AdminDashboard() {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchComplaints();
   }, [navigate]);
-
   const handleLogout = () => {
     localStorage.removeItem('g360_admin_token');
     localStorage.removeItem('g360_admin_user');
     navigate('/admin/login');
   };
-
   // Open Edit Action Modal
   const openActionModal = (complaint) => {
     setSelectedComplaint(complaint);
     setActionStatus(complaint.status);
     setActionPriority(complaint.priority);
     setActionRemarks(complaint.adminRemarks || '');
-
     // Bootstrap trigger
     const modalEl = document.getElementById('detailsModal');
     const modal = new window.bootstrap.Modal(modalEl);
     modal.show();
   };
-
   const handleSaveAction = async () => {
     if (!selectedComplaint) return;
     const headers = getHeaders();
     if (!headers) return;
-
     setUpdating(true);
-
     try {
       await axios.patch(`/api/complaints/${selectedComplaint.complaintId}/status`, {
         status: actionStatus,
         priority: actionPriority,
         adminRemarks: actionRemarks
       }, headers);
-
       // Close modal
       const modalEl = document.getElementById('detailsModal');
       const modal = window.bootstrap.Modal.getInstance(modalEl);
       modal.hide();
-
       // Refresh list
       fetchComplaints();
     } catch (err) {
@@ -108,13 +93,11 @@ function AdminDashboard() {
       setUpdating(false);
     }
   };
-
   // Calculate Metrics
   const total = complaints.length;
   const pending = complaints.filter(c => c.status === 'Pending').length;
   const review = complaints.filter(c => c.status === 'Under Review').length;
   const resolved = complaints.filter(c => c.status === 'Resolved').length;
-
   // Filter Logic
   const filteredComplaints = complaints.filter(c => {
     const matchesSearch = c.complaintId.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -122,10 +105,8 @@ function AdminDashboard() {
       c.description.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = filterCategory === 'All' || c.category === filterCategory;
     const matchesStatus = filterStatus === 'All' || c.status === filterStatus;
-
     return matchesSearch && matchesCategory && matchesStatus;
   });
-
   const getStatusBadgeClass = (status) => {
     switch (status) {
       case 'Pending': return 'badge-pending';
@@ -135,7 +116,6 @@ function AdminDashboard() {
       default: return 'bg-secondary';
     }
   };
-
   const getPriorityBadgeClass = (priority) => {
     switch (priority) {
       case 'Low': return 'badge-priority-low';
@@ -144,7 +124,6 @@ function AdminDashboard() {
       default: return 'bg-secondary';
     }
   };
-
   return (
     <div className="container-fluid px-md-5 my-5">
       <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
@@ -158,7 +137,6 @@ function AdminDashboard() {
           </button>
         </div>
       </div>
-
       {/* Metrics Row */}
       <div className="row g-3 mb-5">
         <div className="col-6 col-md-3">
@@ -186,7 +164,6 @@ function AdminDashboard() {
           </div>
         </div>
       </div>
-
       {/* Filters Section */}
       <div className="glass-card p-4 mb-4">
         <div className="row g-3 align-items-end">
@@ -246,13 +223,11 @@ function AdminDashboard() {
           </div>
         </div>
       </div>
-
       {errorMsg && (
         <div className="alert alert-danger mb-4" role="alert">
           <i className="bi bi-exclamation-triangle-fill me-2"></i> {errorMsg}
         </div>
       )}
-
       {/* Complaints Table */}
       <div className="glass-card p-0 overflow-hidden shadow-sm">
         <div className="table-responsive">
@@ -320,7 +295,6 @@ function AdminDashboard() {
           </table>
         </div>
       </div>
-
       {/* Action / Detail Modal */}
       <div className="modal fade" id="detailsModal" tabIndex="-1" aria-hidden="true">
         <div className="modal-dialog modal-lg modal-dialog-centered">
@@ -361,37 +335,42 @@ function AdminDashboard() {
                     <h5 className="fw-bold">{selectedComplaint.category}</h5>
                   </div>
                 </div>
-
+                {selectedComplaint.category === 'University' && (
+                  <div className="alert alert-primary py-2 mb-3">
+                    <h6 className="fw-bold mb-1" style={{ fontSize: '0.9rem' }}><i className="bi bi-bank-fill me-1"></i>University Grievance Details</h6>
+                    <div className="row g-1 small">
+                      <div className="col-sm-12"><strong>Grievance Type:</strong> {selectedComplaint.subcategory}</div>
+                    </div>
+                  </div>
+                )}
                 {selectedComplaint.category === 'Hostel' && (
                   <div className="alert alert-info py-2 mb-3">
                     <h6 className="fw-bold mb-1" style={{ fontSize: '0.9rem' }}><i className="bi bi-house-door-fill me-1"></i>Hostel Grievance Details</h6>
                     <div className="row g-1 small">
-                      <div className="col-sm-6"><strong>Grievance Type:</strong> {selectedComplaint.hostelSubcategory}</div>
+                      <div className="col-sm-6"><strong>Grievance Type:</strong> {selectedComplaint.subcategory}</div>
                       <div className="col-sm-6"><strong>Hostel Name:</strong> {selectedComplaint.hostelName}</div>
                       <div className="col-sm-6"><strong>Room Type:</strong> {selectedComplaint.roomType} ({selectedComplaint.roomSharing} sharing)</div>
                       <div className="col-sm-6"><strong>Location:</strong> {selectedComplaint.hostelBlock}, Room {selectedComplaint.roomNumber}</div>
                     </div>
                   </div>
                 )}
-
                 {selectedComplaint.category === 'Bus' && (
                   <div className="alert alert-success py-2 mb-3">
                     <h6 className="fw-bold mb-1" style={{ fontSize: '0.9rem' }}><i className="bi bi-bus-front-fill me-1"></i>Transport Grievance Details</h6>
                     <div className="row g-1 small">
+                      <div className="col-sm-6"><strong>Grievance Type:</strong> {selectedComplaint.subcategory}</div>
                       <div className="col-sm-6"><strong>Bus Route/Name:</strong> {selectedComplaint.busRoute}</div>
                       <div className="col-sm-6"><strong>Bus Type:</strong> {selectedComplaint.busType}</div>
                       <div className="col-sm-6"><strong>Bus Plate No:</strong> {selectedComplaint.busNumber}</div>
                     </div>
                   </div>
                 )}
-
                 <div className="mb-4">
                   <span className="text-muted small d-block mb-1">Grievance Description</span>
                   <div className="p-3 bg-light rounded" style={{ whiteSpace: 'pre-wrap' }}>
                     {selectedComplaint.description}
                   </div>
                 </div>
-
                 {selectedComplaint.fileUrl && (
                   <div className="mb-4">
                     <span className="text-muted small d-block mb-1">Attachment File</span>
@@ -405,9 +384,7 @@ function AdminDashboard() {
                     </a>
                   </div>
                 )}
-
                 <hr />
-
                 <form onSubmit={(e) => e.preventDefault()}>
                   <div className="row g-3 mb-3">
                     <div className="col-md-6">
@@ -438,7 +415,6 @@ function AdminDashboard() {
                       </select>
                     </div>
                   </div>
-
                   <div className="mb-3">
                     <label htmlFor="modalRemarksInput" className="form-label fw-semibold">Administrative Remarks / Action Description</label>
                     <textarea 
@@ -471,9 +447,7 @@ function AdminDashboard() {
           </div>
         </div>
       </div>
-
     </div>
   );
 }
-
 export default AdminDashboard;
