@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
-
 function Track() {
   const [searchParams] = useSearchParams();
   const [complaintId, setComplaintId] = useState('');
   const [complaint, setComplaint] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-
   // Check URL query parameters on load (e.g. ?id=VT-2026-0001)
   useEffect(() => {
     const idParam = searchParams.get('id');
@@ -17,13 +15,11 @@ function Track() {
       fetchComplaint(idParam);
     }
   }, [searchParams]);
-
   const fetchComplaint = async (idToFetch) => {
     if (!idToFetch) return;
     setLoading(true);
     setErrorMsg('');
     setComplaint(null);
-
     try {
       const res = await axios.get(`/api/complaints/${idToFetch.toUpperCase()}`);
       setComplaint(res.data);
@@ -34,13 +30,11 @@ function Track() {
       setLoading(false);
     }
   };
-
   const handleTrackSubmit = (e) => {
     e.preventDefault();
     if (!complaintId.trim()) return;
     fetchComplaint(complaintId.trim());
   };
-
   // Helper classes for badges
   const getStatusBadgeClass = (status) => {
     switch (status) {
@@ -51,7 +45,6 @@ function Track() {
       default: return 'bg-secondary';
     }
   };
-
   const getPriorityBadgeClass = (priority) => {
     switch (priority) {
       case 'Low': return 'badge-priority-low';
@@ -60,7 +53,6 @@ function Track() {
       default: return 'bg-secondary';
     }
   };
-
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
@@ -72,7 +64,6 @@ function Track() {
             <p className="text-muted text-center mb-4">
               Enter your tracking ID (e.g., VT-2026-0001) to look up live status logs and resolution history.
             </p>
-
             <form onSubmit={handleTrackSubmit}>
               <div className="input-group mb-3">
                 <span className="input-group-text bg-white border-end-0 text-muted"><i className="bi bi-hash"></i></span>
@@ -97,7 +88,6 @@ function Track() {
                 </button>
               </div>
             </form>
-
             {errorMsg && (
               <div className="alert alert-danger mt-3 mb-0" role="alert">
                 <i className="bi bi-exclamation-triangle-fill me-2"></i> {errorMsg}
@@ -106,7 +96,6 @@ function Track() {
           </div>
         </div>
       </div>
-
       {/* Result Panel */}
       {complaint && (
         <div className="row justify-content-center">
@@ -125,7 +114,6 @@ function Track() {
                   </span>
                 </div>
               </div>
-
               <div className="row g-4 mb-4">
                 <div className="col-md-6">
                   <p className="text-muted small mb-1">CATEGORY</p>
@@ -142,38 +130,43 @@ function Track() {
                   </h5>
                 </div>
               </div>
-
               {/* Conditional Category Specific Info Panel */}
+              {complaint.category === 'University' && (
+                <div className="alert alert-primary py-3 mb-4">
+                  <h6 className="fw-bold mb-2"><i className="bi bi-bank-fill me-1"></i>University Grievance Details</h6>
+                  <div className="row g-2 small">
+                    <div className="col-sm-12"><strong>Grievance Type:</strong> {complaint.subcategory}</div>
+                  </div>
+                </div>
+              )}
               {complaint.category === 'Hostel' && (
                 <div className="alert alert-info py-3 mb-4">
                   <h6 className="fw-bold mb-2"><i className="bi bi-house-door-fill me-1"></i>Hostel Grievance Details</h6>
                   <div className="row g-2 small">
-                    <div className="col-sm-6"><strong>Grievance Type:</strong> {complaint.hostelSubcategory}</div>
+                    <div className="col-sm-6"><strong>Grievance Type:</strong> {complaint.subcategory}</div>
                     <div className="col-sm-6"><strong>Hostel Name:</strong> {complaint.hostelName}</div>
                     <div className="col-sm-6"><strong>Room Type:</strong> {complaint.roomType} ({complaint.roomSharing} sharing)</div>
                     <div className="col-sm-6"><strong>Location:</strong> {complaint.hostelBlock}, Room {complaint.roomNumber}</div>
                   </div>
                 </div>
               )}
-
               {complaint.category === 'Bus' && (
                 <div className="alert alert-success py-3 mb-4">
                   <h6 className="fw-bold mb-2"><i className="bi bi-bus-front-fill me-1"></i>Transport Grievance Details</h6>
                   <div className="row g-2 small">
+                    <div className="col-sm-6"><strong>Grievance Type:</strong> {complaint.subcategory}</div>
                     <div className="col-sm-6"><strong>Bus Route/Name:</strong> {complaint.busRoute}</div>
                     <div className="col-sm-6"><strong>Bus Type:</strong> {complaint.busType}</div>
                     <div className="col-sm-6"><strong>Bus Plate No:</strong> {complaint.busNumber}</div>
                   </div>
                 </div>
               )}
-
               <div className="mb-4">
                 <p className="text-muted small mb-1">DESCRIPTION</p>
                 <div className="p-3 bg-light rounded text-dark" style={{ whiteSpace: 'pre-wrap' }}>
                   {complaint.description}
                 </div>
               </div>
-
               {complaint.fileUrl && (
                 <div className="mb-4">
                   <p className="text-muted small mb-1">ATTACHMENT</p>
@@ -187,7 +180,6 @@ function Track() {
                   </a>
                 </div>
               )}
-
               <div className="row g-4 mb-4">
                 <div className="col-md-6">
                   <p className="text-muted small mb-1">STATUS</p>
@@ -202,7 +194,6 @@ function Track() {
                   </span>
                 </div>
               </div>
-
               <div className="border-top pt-4">
                 <h5 className="fw-bold mb-3">
                   <i className="bi bi-chat-right-text text-secondary me-2"></i>Admin Remarks
@@ -217,7 +208,6 @@ function Track() {
                   </div>
                 )}
               </div>
-
             </div>
           </div>
         </div>
@@ -225,5 +215,4 @@ function Track() {
     </div>
   );
 }
-
 export default Track;
