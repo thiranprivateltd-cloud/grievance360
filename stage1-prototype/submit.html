@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Complaint | Grievance360</title>
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <i class="bi bi-shield-check text-warning me-2 fs-2"></i>
+        <div>
+          <span class="d-block fw-bold text-white lh-1">Grievance360</span>
+          <small class="text-warning fw-semibold fs-7" style="font-size: 0.75rem;">Vel Tech University</small>
+        </div>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto gap-2 mt-2 mt-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-white-50" href="index.html"><i class="bi bi-house-door me-1"></i> Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active text-white" href="submit.html"><i class="bi bi-file-earmark-plus me-1"></i> Submit Complaint</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white-50" href="track.html"><i class="bi bi-search me-1"></i> Track Complaint</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white-50" href="admin-login.html"><i class="bi bi-person-lock me-1"></i> Admin Login</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Submit Container -->
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="glass-card p-4 p-md-5">
+          <h2 class="mb-4 text-center"><i class="bi bi-file-earmark-plus text-secondary me-2"></i>Submit a Grievance</h2>
+          <p class="text-muted text-center mb-5">Please fill out the details below. Select the appropriate category to route your complaint to the correct administrative department.</p>
+          
+          <form id="complaintForm" class="needs-validation" novalidate>
+            <!-- Anonymous Checkbox first to control field disablement -->
+            <div class="form-check form-switch mb-4 p-3 bg-light rounded border border-warning-subtle">
+              <input class="form-check-input ms-0 me-2" type="checkbox" id="isAnonymous">
+              <label class="form-check-label fw-semibold text-dark" for="isAnonymous">
+                <i class="bi bi-incognito me-1 text-warning"></i> Submit Anonymously
+              </label>
+              <div class="form-text text-muted">Checking this will hide your Name, Register Number, Email, and Phone Number from the dashboard administrators.</div>
+            </div>
+
+            <!-- Student details grouping -->
+            <div id="studentDetails">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="fullName" class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="fullName" placeholder="e.g. John Doe" required>
+                  <div class="invalid-feedback">Please enter your full name.</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="registerNo" class="form-label fw-semibold">Register Number <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="registerNo" placeholder="e.g. VTU12345" required>
+                  <div class="invalid-feedback">Please enter your register number.</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="email" class="form-label fw-semibold">Email Address <span class="text-danger">*</span></label>
+                  <input type="email" class="form-control" id="email" placeholder="e.g. name@student.veltech.edu.in" required>
+                  <div class="invalid-feedback">Please enter a valid email address.</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="phone" class="form-label fw-semibold">Phone Number <span class="text-danger">*</span></label>
+                  <input type="tel" class="form-control" id="phone" placeholder="e.g. 9876543210" pattern="[0-9]{10}" required>
+                  <div class="invalid-feedback">Please enter a valid 10-digit phone number.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Common Fields -->
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="department" class="form-label fw-semibold">Department <span class="text-danger">*</span></label>
+                <select class="form-select" id="department" required>
+                  <option value="" selected disabled>Choose your department...</option>
+                  <option value="CSE">Computer Science & Engineering</option>
+                  <option value="ECE">Electronics & Communication Engineering</option>
+                  <option value="EEE">Electrical & Electronics Engineering</option>
+                  <option value="MECH">Mechanical Engineering</option>
+                  <option value="CIVIL">Civil Engineering</option>
+                  <option value="MBA">School of Management</option>
+                  <option value="SCIENCES">Arts & Science</option>
+                </select>
+                <div class="invalid-feedback">Please select a department.</div>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label for="category" class="form-label fw-semibold">Grievance Category <span class="text-danger">*</span></label>
+                <select class="form-select" id="category" required>
+                  <option value="" selected disabled>Choose a category...</option>
+                  <option value="Academic">Academic (Exams, Classes, Syllabus)</option>
+                  <option value="Hostel">Hostel (Rooms, Cleanliness)</option>
+                  <option value="Infrastructure">Infrastructure (Labs, Classrooms, Buildings)</option>
+                  <option value="Administration">Administration (Fees, Certificates, ID Card)</option>
+                  <option value="Harassment/Ragging">Harassment / Anti-Ragging</option>
+                  <option value="Mess/Food">Mess & Cafeteria Food Quality</option>
+                  <option value="IT Services">IT Services (WiFi, Portal, Labs)</option>
+                  <option value="Other">Other Issues</option>
+                </select>
+                <div class="invalid-feedback">Please select a grievance category.</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="incidentDate" class="form-label fw-semibold">Date of Incident <span class="text-danger">*</span></label>
+                <input type="date" class="form-control" id="incidentDate" required>
+                <div class="invalid-feedback">Please specify the date of the incident.</div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="attachment" class="form-label fw-semibold">Attachment (Optional)</label>
+                <input type="file" class="form-control" id="attachment" accept=".pdf,.jpg,.jpeg,.png">
+                <div class="form-text text-muted">Accepted formats: PDF, JPG, PNG (Max 5MB).</div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="description" class="form-label fw-semibold">Detailed Description <span class="text-danger">*</span></label>
+              <textarea class="form-control" id="description" rows="5" placeholder="Please provide clear facts, locations, and any relevant details..." required></textarea>
+              <div class="invalid-feedback">Please describe your grievance.</div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary btn-lg"><i class="bi bi-send-fill me-2"></i>Submit Complaint</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal fade" id="confirmationModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title"><i class="bi bi-check-circle-fill me-2"></i>Submission Successful!</h5>
+        </div>
+        <div class="modal-body text-center p-4">
+          <p class="fs-5 mb-3">Your grievance has been submitted successfully.</p>
+          <div class="alert alert-warning py-3">
+            <p class="mb-1 text-muted">Please save your unique tracking ID:</p>
+            <h3 class="fw-bold text-dark mb-0" id="generatedId">VT-2026-0001</h3>
+          </div>
+          <p class="text-muted small">You will need this ID to check the status of your complaint and view updates from administration.</p>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <a href="track.html" class="btn btn-primary px-4"><i class="bi bi-search me-2"></i>Track Complaint</a>
+          <a href="index.html" class="btn btn-outline-secondary px-4">Back to Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="py-3 text-center text-secondary">
+    <div class="container">
+      <small>Designed & Developed by Varshith G S</small>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom Script -->
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+/* Import outfit and inter fonts from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --primary-color: #0c2340; /* Deep Navy Blue */
+  --secondary-color: #1d70b8; /* Royal Blue */
+  --accent-color: #f2a900; /* Gold/Amber */
+  --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --text-dark: #1e293b;
+  --text-muted: #64748b;
+  --transition-speed: 0.3s;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  color: var(--text-dark);
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+/* Premium Header styling */
+.navbar {
+  background-color: var(--primary-color) !important;
+  box-shadow: 0 4px 20px rgba(12, 35, 64, 0.15);
+  border-bottom: 3px solid var(--accent-color);
+}
+
+.navbar-brand {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 1.6rem;
+  letter-spacing: -0.5px;
+}
+
+.nav-link {
+  font-weight: 500;
+  transition: color var(--transition-speed);
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  background-color: var(--accent-color);
+  transition: width var(--transition-speed), left var(--transition-speed);
+}
+
+.nav-link:hover::after {
+  width: 80%;
+  left: 10%;
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(12, 35, 64, 0.1);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  font-weight: 600;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  transition: all var(--transition-speed);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(29, 112, 184, 0.3);
+}
+
+.btn-outline-primary {
+  color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  font-weight: 600;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  transition: all var(--transition-speed);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Flowchart design */
+.flow-step {
+  position: relative;
+  text-align: center;
+  padding: 2rem;
+}
+
+.flow-icon {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  margin: 0 auto 1.5rem;
+  border: 4px solid white;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer Styling */
+footer {
+  margin-top: auto;
+  background-color: #081629;
+  color: #94a3b8;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Badge coloring */
+.badge-academic { background-color: #0284c7; }
+.badge-hostel { background-color: #f59e0b; }
+.badge-infrastructure { background-color: #10b981; }
+.badge-administration { background-color: #6366f1; }
+.badge-harassment { background-color: #ef4444; }
+.badge-mess { background-color: #ec4899; }
+.badge-it { background-color: #14b8a6; }
+.badge-other { background-color: #6b7280; }
+
+.badge-pending { background-color: #f59e0b; color: #fff; }
+.badge-review { background-color: #3b82f6; color: #fff; }
+.badge-resolved { background-color: #10b981; color: #fff; }
+.badge-rejected { background-color: #ef4444; color: #fff; }
+
+.badge-priority-low { background-color: #e2e8f0; color: #475569; }
+.badge-priority-medium { background-color: #fef3c7; color: #d97706; }
+.badge-priority-high { background-color: #fee2e2; color: #dc2626; }
