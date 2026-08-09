@@ -241,7 +241,7 @@ function Submit() {
                         type="text" 
                         className="form-control" 
                         id="name" 
-                        placeholder="e.g. John Doe"
+                        placeholder="e.g. Alice"
                         value={formData.name}
                         onChange={handleChange}
                         disabled={isAnonymous}
@@ -250,7 +250,7 @@ function Submit() {
                       <div className="invalid-feedback">Full Name is required.</div>
                     </div>
                     <div className="col-md-6 mb-3">
-                      <label htmlFor="registerNumber" className="form-label fw-semibold">Register Number {!isAnonymous && <span className="text-danger">*</span>}</label>
+                      <label htmlFor="registerNumber" className="form-label fw-semibold">VTU Number {!isAnonymous && <span className="text-danger">*</span>}</label>
                       <input 
                         type="text" 
                         className="form-control" 
@@ -272,7 +272,7 @@ function Submit() {
                         type="email" 
                         className="form-control" 
                         id="email" 
-                        placeholder="e.g. name@student.veltech.edu.in"
+                        placeholder="e.g. vtuxxxxx@veltech.edu.in"
                         value={formData.email}
                         onChange={handleChange}
                         disabled={isAnonymous}
@@ -516,7 +516,7 @@ function Submit() {
                           type="text" 
                           className="form-control" 
                           id="busRoute" 
-                          placeholder="e.g. Route 24 (Tambaram)"
+                          placeholder="e.g. Tambaram"
                           value={busData.busRoute}
                           onChange={handleBusChange}
                           required
@@ -544,12 +544,12 @@ function Submit() {
                           type="text" 
                           className="form-control" 
                           id="busNumber" 
-                          placeholder="e.g. TN-05-AB-1234"
+                          placeholder="e.g. 201"
                           value={busData.busNumber}
                           onChange={handleBusChange}
                           required
                         />
-                        <div className="invalid-feedback">Please specify the bus plate number.</div>
+                        <div className="invalid-feedback">Please specify the bus number.</div>
                       </div>
                     </div>
                   </div>
